@@ -1,49 +1,64 @@
-# Solar System NodeJS Application
 
-A simple HTML+MongoDB+NodeJS project to display Solar System and it's planets.
+## 🐳 Docker Support
 
----
-## Requirements
+This project is fully containerized. You can **build, run, and deploy** it easily using Docker.
 
-For development, you will only need Node.js and NPM installed in your environement.
+### 🔧 Prerequisites
 
-### Node
-- #### Node installation on Windows
-
-  Just go on [official Node.js website](https://nodejs.org/) and download the installer.
-Also, be sure to have `git` available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com/)).
-
-- #### Node installation on Ubuntu
-
-  You can install nodejs and npm easily with apt install, just run the following commands.
-
-      $ sudo apt install nodejs
-      $ sudo apt install npm
-
-- #### Other Operating Systems
-  You can find more information about the installation on the [official Node.js website](https://nodejs.org/) and the [official NPM website](https://npmjs.org/).
-
-If the installation was successful, you should be able to run the following command.
-
-    $ node --version
-    v8.11.3
-
-    $ npm --version
-    6.1.0
+- [Docker](https://www.docker.com/get-started) installed locally  
+- Docker Hub account (for pulling/pushing images)  
 
 ---
-## Install Dependencies from `package.json`
-    $ npm install
 
-## Run Unit Testing
-    $ npm test
+### 🏗️ Build & Run Locally
 
-## Run Code Coverage
-    $ npm run coverage
+1. **Build the Docker image**
 
-## Run Application
-    $ npm start
+```bash
+docker build -t <your-dockerhub-username>/app:latest .
 
-## Access Application on Browser
-    http://localhost:3000/
+    Run the container
+
+docker run -p 3000:3000 <your-dockerhub-username>/app:latest
+
+    Test the app
+
+Open your browser at:
+👉 http://localhost:3000
+
+    ⚠️ Change 3000 if your app runs on a different port.
+
+📥 Pull & Run from Docker Hub
+
+    Pull the latest image
+
+docker pull <your-dockerhub-username>/app:latest
+
+    Run it
+
+docker run -p 3000:3000 <your-dockerhub-username>/app:latest
+
+    Run a specific version
+
+docker run -p 3000:3000 <your-dockerhub-username>/app:1.0.0
+
+⚡ CI/CD with GitHub Actions
+
+This repository uses GitHub Actions to build and publish the Docker image automatically.
+
+    ✅ Runs on push to main branch
+
+    ✅ Builds Docker image
+
+    ✅ Tags as latest and version (1.0.0)
+
+    ✅ Pushes to Docker Hub
+
+🔑 Required GitHub Secrets
+
+    DOCKERHUB_USERNAME → Your Docker Hub username
+
+    DOCKERHUB_TOKEN → Docker Hub access token
+
+Workflow file: .github/workflows/docker.yaml
 
