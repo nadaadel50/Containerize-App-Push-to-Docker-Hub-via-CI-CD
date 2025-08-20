@@ -1,32 +1,26 @@
 name: Docker Build and Push
 
 on:
-    push:
-        branches:
-            - main
-    workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-    build_and_push:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v5
+  docker:
+    runs-on: ubuntu-latest
 
-            - name: Log in to Docker Hubb
-              uses: docker/login-action@v3.5.0
-              with:
-                username: ${{ secrets.DOCKERHUB_USERNAME }}
-                password: ${{ secrets.DOCKERHUB_PASSWORD }}
-            
-            - name: Build Docker image
-              run: |
-                docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/solar_system_app:latest .
-                docker tag ${{ secrets.DOCKERHUB_USERNAME }}/solar_system_app:latest ${{ secrets.DOCKERHUB_USERNAME }}/solar_system_app:1.0.0
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
 
-            - name: Push Docker image
-              run: |
-                docker push ${{ secrets.DOCKERHUB_USERNAME }}/solar_system_app:latest
-                docker push ${{ secrets.DOCKERHUB_USERNAME }}/solar_system_app:1.0.0
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: nadaadel2004/solar_system_app:latest
